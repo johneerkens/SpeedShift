@@ -117,7 +117,7 @@ theme_btn = tk.Button(
     command=toggle_theme,
     width=25,          # 👈 THIS is the key
     relief="raised",
-    pady=4
+    pady=15
 )
 theme_btn.pack()
 
