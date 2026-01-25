@@ -107,16 +107,19 @@ exit_btn.pack(pady=6)
 result_label = ttk.Label(root, text="", font=("Arial", 12))
 result_label.pack(pady=6)
 
-# Theme toggle button (high visibility)
+# Theme toggle button (full width)
+theme_frame = tk.Frame(root, bg=root["bg"])
+theme_frame.pack(pady=10)
+
 theme_btn = tk.Button(
-    root,
-    text="🌙  Dark / ☀️  Light",
+    theme_frame,
+    text="🌙  Dark  /  ☀️  Light",
     command=toggle_theme,
+    width=25,          # 👈 THIS is the key
     relief="raised",
-    padx=12,
     pady=4
 )
-theme_btn.pack(pady=10)
+theme_btn.pack()
 
 root.mainloop()
 
