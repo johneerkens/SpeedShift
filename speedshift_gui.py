@@ -40,12 +40,18 @@ def toggle_theme():
     bg = "#1e1e1e" if dark_mode else "#f0f0f0"
     fg = "#ffffff" if dark_mode else "#000000"
     entry_bg = "#2d2d2d" if dark_mode else "#ffffff"
+    btn_bg = DARK_BTN_BG if dark_mode else LIGHT_BTN_BG
 
     root.configure(bg=bg)
     style.configure("TLabel", background=bg, foreground=fg)
-    style.configure("TButton", background=bg)
     style.configure("TCombobox", fieldbackground=entry_bg)
     entry_value.configure(background=entry_bg, foreground=fg)
+
+    theme_btn.configure(
+        background=btn_bg,
+        foreground=fg,
+        activebackground=btn_bg
+    )
 
 # --- GUI setup ---
 root = tk.Tk()
@@ -56,6 +62,8 @@ root.resizable(False, False)
 dark_mode = False
 style = ttk.Style()
 style.theme_use("default")
+LIGHT_BTN_BG = "#e0e0e0"
+DARK_BTN_BG = "#3a3a3a"
 
 # Title
 title = ttk.Label(root, text="SpeedShift", font=("Arial", 16))
@@ -99,9 +107,16 @@ exit_btn.pack(pady=6)
 result_label = ttk.Label(root, text="", font=("Arial", 12))
 result_label.pack(pady=6)
 
-# Theme toggle
-theme_btn = ttk.Button(root, text="🌙 / 🌞 Toggle Theme", command=toggle_theme)
-theme_btn.pack(pady=8)
+# Theme toggle button (high visibility)
+theme_btn = tk.Button(
+    root,
+    text="🌙  Dark / ☀️  Light",
+    command=toggle_theme,
+    relief="raised",
+    padx=12,
+    pady=4
+)
+theme_btn.pack(pady=10)
 
 root.mainloop()
 
