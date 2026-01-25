@@ -2,12 +2,15 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-# Conversion factors (to m/s)
-CONVERSION_TO_MS = {
+# All speed units converted TO meters per second
+SPEED_UNITS = {
     "km/h": 0.277778,
     "mph": 0.44704,
     "m/s": 1.0,
-    "knots": 0.514444
+    "knots": 0.514444,
+    "ft/s": 0.3048,
+    "cm/s": 0.01,
+    "Mach (approx)": 343.0
 }
 
 def convert():
@@ -16,10 +19,10 @@ def convert():
         from_unit = from_unit_var.get()
         to_unit = to_unit_var.get()
 
-        value_ms = value * CONVERSION_TO_MS[from_unit]
-        result = value_ms / CONVERSION_TO_MS[to_unit]
+        value_ms = value * SPEED_UNITS[from_unit]
+        result = value_ms / SPEED_UNITS[to_unit]
 
-        result_label.config(text=f"{result:.3f} {to_unit}")
+        result_label.config(text=f"{result:.4f} {to_unit}")
     except ValueError:
         messagebox.showerror("Error", "Please enter a valid number")
 
@@ -37,10 +40,10 @@ def toggle_theme():
     style.configure("TCombobox", fieldbackground=entry_bg)
     entry_value.configure(background=entry_bg, foreground=fg)
 
-# Main window
+# --- GUI setup ---
 root = tk.Tk()
 root.title("SpeedShift")
-root.geometry("340x260")
+root.geometry("360x300")
 root.resizable(False, False)
 
 dark_mode = False
@@ -51,32 +54,37 @@ style.theme_use("default")
 title = ttk.Label(root, text="SpeedShift", font=("Arial", 16))
 title.pack(pady=10)
 
-# Entry
+# Input
 entry_value = tk.Entry(root, justify="center", font=("Arial", 11))
-entry_value.pack(pady=5)
+entry_value.pack(pady=6)
 
-# Units
-units = list(CONVERSION_TO_MS.keys())
+# Units (dynamic)
+units = list(SPEED_UNITS.keys())
 
 from_unit_var = tk.StringVar(value="km/h")
 to_unit_var = tk.StringVar(value="mph")
 
-from_unit = ttk.Combobox(root, textvariable=from_unit_var, values=units, state="readonly")
-to_unit = ttk.Combobox(root, textvariable=to_unit_var, values=units, state="readonly")
+from_unit = ttk.Combobox(
+    root, textvariable=from_unit_var, values=units, state="readonly"
+)
+to_unit = ttk.Combobox(
+    root, textvariable=to_unit_var, values=units, state="readonly"
+)
 
 from_unit.pack(pady=4)
 to_unit.pack(pady=4)
 
-# Convert button
+# Convert
 convert_btn = ttk.Button(root, text="Convert", command=convert)
 convert_btn.pack(pady=8)
 
 # Result
 result_label = ttk.Label(root, text="", font=("Arial", 12))
-result_label.pack(pady=5)
+result_label.pack(pady=6)
 
 # Theme toggle
 theme_btn = ttk.Button(root, text="🌙 / 🌞 Toggle Theme", command=toggle_theme)
 theme_btn.pack(pady=8)
 
 root.mainloop()
+
