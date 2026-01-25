@@ -13,3 +13,8 @@ python3 speedshift_gui.py
 - Light / Dark mode toggle
 - Support km/h, mph, m:s, knots
 - Built with Tkiner
+
+## Version: 1.2
+- Added Clear button
+- Added Exit button
+- Improved GUI usability
