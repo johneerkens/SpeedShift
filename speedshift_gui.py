@@ -30,6 +30,9 @@ def clear_fields():
     entry_value.delete(0, tk.END)
     result_label.config(text="")
 
+def quit_app():
+    root.destroy()
+
 def toggle_theme():
     global dark_mode
     dark_mode = not dark_mode
@@ -87,6 +90,10 @@ convert_btn.grid(row=0, column=0, padx=5)
 
 clear_btn = ttk.Button(button_frame, text="Clear", command=clear_fields)
 clear_btn.grid(row=0, column=1, padx=5)
+
+# Exit Button
+exit_btn = ttk.Button(root, text="Exit", command=quit_app)
+exit_btn.pack(pady=6)
 
 # Result
 result_label = ttk.Label(root, text="", font=("Arial", 12))
