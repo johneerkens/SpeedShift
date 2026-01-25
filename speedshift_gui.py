@@ -80,4 +80,3 @@ theme_btn = ttk.Button(root, text="🌙 / 🌞 Toggle Theme", command=toggle_the
 theme_btn.pack(pady=8)
 
 root.mainloop()
-

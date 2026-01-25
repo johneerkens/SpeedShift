@@ -5,5 +5,11 @@ CLI speed converter (km/h ↔ mph) for Kali Linux
 
 Run the graphical interface:
 
-```bash
+```
 python3 speedshift_gui.py
+
+# GUI Features
+
+- Light / Dark mode toggle
+- Support km/h, mph, m:s, knots
+- Built with Tkiner
