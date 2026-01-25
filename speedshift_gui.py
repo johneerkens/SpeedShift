@@ -26,6 +26,10 @@ def convert():
     except ValueError:
         messagebox.showerror("Error", "Please enter a valid number")
 
+def clear_fields():
+    entry_value.delete(0, tk.END)
+    result_label.config(text="")
+
 def toggle_theme():
     global dark_mode
     dark_mode = not dark_mode
@@ -74,9 +78,15 @@ to_unit = ttk.Combobox(
 from_unit.pack(pady=4)
 to_unit.pack(pady=4)
 
-# Convert
-convert_btn = ttk.Button(root, text="Convert", command=convert)
-convert_btn.pack(pady=8)
+# Buttons frame (Convert + Clear)
+button_frame = ttk.Frame(root)
+button_frame.pack(pady=8)
+
+convert_btn = ttk.Button(button_frame, text="Convert", command=convert)
+convert_btn.grid(row=0, column=0, padx=5)
+
+clear_btn = ttk.Button(button_frame, text="Clear", command=clear_fields)
+clear_btn.grid(row=0, column=1, padx=5)
 
 # Result
 result_label = ttk.Label(root, text="", font=("Arial", 12))
