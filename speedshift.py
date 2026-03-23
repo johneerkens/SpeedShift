@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-def kmh_to_mph(kmh):
-    return kmh * 0.621371
+from speedshift_core import kmh_to_mph, mph_to_kmh
 
-def mph_to_kmh(mph):
-    return mph / 0.621371
 
 def main():
     print("=== SpeedShift ===")
@@ -30,6 +27,7 @@ def main():
 
     else:
         print("Invalid choice.")
+
 
 if __name__ == "__main__":
     main()
