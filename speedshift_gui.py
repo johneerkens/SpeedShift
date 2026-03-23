@@ -2,16 +2,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-# All speed units converted TO meters per second
-SPEED_UNITS = {
-    "km/h": 0.277778,
-    "mph": 0.44704,
-    "m/s": 1.0,
-    "knots": 0.514444,
-    "ft/s": 0.3048,
-    "cm/s": 0.01,
-    "Mach (approx)": 343.0
-}
+from speedshift_core import SPEED_UNITS_TO_MS, convert_speed
+
 
 def convert():
     try:
@@ -19,19 +11,20 @@ def convert():
         from_unit = from_unit_var.get()
         to_unit = to_unit_var.get()
 
-        value_ms = value * SPEED_UNITS[from_unit]
-        result = value_ms / SPEED_UNITS[to_unit]
-
+        result = convert_speed(value, from_unit, to_unit)
         result_label.config(text=f"{result:.4f} {to_unit}")
     except ValueError:
         messagebox.showerror("Error", "Please enter a valid number")
+
 
 def clear_fields():
     entry_value.delete(0, tk.END)
     result_label.config(text="")
 
+
 def quit_app():
     root.destroy()
+
 
 def toggle_theme():
     global dark_mode
@@ -50,8 +43,9 @@ def toggle_theme():
     theme_btn.configure(
         background=btn_bg,
         foreground=fg,
-        activebackground=btn_bg
+        activebackground=btn_bg,
     )
+
 
 # --- GUI setup ---
 root = tk.Tk()
@@ -74,16 +68,22 @@ entry_value = tk.Entry(root, justify="center", font=("Arial", 11))
 entry_value.pack(pady=6)
 
 # Units (dynamic)
-units = list(SPEED_UNITS.keys())
+units = list(SPEED_UNITS_TO_MS.keys())
 
 from_unit_var = tk.StringVar(value="km/h")
 to_unit_var = tk.StringVar(value="mph")
 
 from_unit = ttk.Combobox(
-    root, textvariable=from_unit_var, values=units, state="readonly"
+    root,
+    textvariable=from_unit_var,
+    values=units,
+    state="readonly",
 )
 to_unit = ttk.Combobox(
-    root, textvariable=to_unit_var, values=units, state="readonly"
+    root,
+    textvariable=to_unit_var,
+    values=units,
+    state="readonly",
 )
 
 from_unit.pack(pady=4)
@@ -115,11 +115,10 @@ theme_btn = tk.Button(
     theme_frame,
     text="🌙  Dark  /  ☀️  Light",
     command=toggle_theme,
-    width=25,          # 👈 THIS is the key
+    width=25,
     relief="raised",
-    pady=15
+    pady=15,
 )
 theme_btn.pack()
 
 root.mainloop()
-
